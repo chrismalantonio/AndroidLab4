@@ -10,6 +10,7 @@ import android.widget.Spinner;
 public class PaletteActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String[] colors = {"White", "Maroon", "Red", "Yellow", "Green", "Teal", "Blue", "Purple", "Fuchsia", "Grey"};
     public static String colorSelected = "color";
+    private boolean isSpinnerInitial = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,13 +25,14 @@ public class PaletteActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        if (isSpinnerInitial) {
             View mainView = (View) findViewById(R.id.layout);
             Intent colorIntent = new Intent(PaletteActivity.this, ColorActivity.class);
             colorIntent.putExtra(colorSelected, colors[i]);
-            if (!colorIntent.getStringExtra(colorSelected).equals("White")){
                 startActivity(colorIntent);
-            }
-
+        } else {
+            isSpinnerInitial = true;
+        }
     }
 
     @Override
